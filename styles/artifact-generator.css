@@ -1,0 +1,68 @@
+/* Styling für das Drop-Target */
+.item-drop-target {
+    border: 2px dashed #7a7973;
+    padding: 15px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.02);
+    margin-bottom: 15px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.item-drop-target i {
+    font-size: 24px;
+    color: #7a1f1f;
+}
+
+/* Visuelles Feedback beim Drüberziehen */
+.item-drop-target.dragover {
+    background: rgba(122, 31, 31, 0.1);
+    border-color: #7a1f1f;
+}
+
+/* Bestehende Grid- und Tabellenstile von dir */
+.dsa5-artifact-generator-form fieldset {
+    margin-bottom: 15px;
+    border: 1px solid #7a7973;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.dsa5-artifact-generator-form fieldset[disabled] {
+    opacity: 0.5;
+}
+
+.dsa5-artifact-generator-form .form-buttons {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.dsa5-artifact-generator-form .submit-generator {
+    padding: 8px 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.basisdaten-grid, .kern-grid {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    row-gap: 8px;
+    column-gap: 10px;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.grid-label { font-weight: bold; }
+.grid-field input, .grid-field select { width: 100%; box-sizing: border-box; }
+.kern-grid .grid-field input[type="checkbox"] { width: auto; justify-self: start; cursor: pointer; }
+
+.artifact-effects-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.artifact-effects-table th, .artifact-effects-table td { padding: 6px; vertical-align: middle; }
+.artifact-effects-table .strength-cell { text-align: center; width: 80px; }
+.artifact-effects-table .strength-input { width: 100%; text-align: center; box-sizing: border-box; }
+.artifact-effects-table button { cursor: pointer; padding: 4px 8px; }

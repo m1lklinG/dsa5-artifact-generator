@@ -1,0 +1,29 @@
+{
+  "id": "dsa5-artifact-generator",
+  "title": "DSA5 Artefakt & Talisman Generator",
+  "description": "Ein Tool für den GM, um magische und karmale Gegenstände mit System-Modifikatoren für DSA5 zu erstellen.",
+  "version": "0.0.1",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "authors": [
+    {
+      "name": "Grimheimr"
+    }
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "dsa5",
+        "version": "8"
+      }
+    ]
+  },
+  "esmodules": [
+    "./scripts/main.js"
+  ],
+  "styles": [
+    "./styles/artifact-generator.css"
+  ]
+}

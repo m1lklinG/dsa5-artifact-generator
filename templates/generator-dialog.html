@@ -1,0 +1,113 @@
+<div class="dsa5-artifact-generator-root-wrapper">
+    <div id="artifact-source-drop" class="drop-zone" style="padding: 30px 15px; border: 2px dashed #7a7973; text-align: center; background: rgba(0,0,0,0.15); border-radius: 4px; margin-bottom: 15px; {{#if hasItem}}display: none;{{/if}}">
+        <i class="fas fa-sparkles" style="font-size: 1.5em; margin-bottom: 8px; display: block; color: #000000;"></i>
+        <span style="font-weight: bold; color: #000000;">Ziehe einen Gegenstand hierher...</span>
+    </div>
+
+    {{#if hasItem}}
+    <div id="generator-content-fields">
+        <fieldset>
+            <legend>Gegenstands-Details</legend>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="itemName" value="{{itemName}}">
+            </div>
+            <div class="form-group">
+                <label>Preis</label>
+                <input type="number" name="artifactPrice" step="0.01" min="0" value="{{artifactPrice}}">
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Ursache für die Macht</legend>
+            <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
+                <label style="flex: 1;">Kategorie</label>
+                <select name="sourceCategory" class="source-category-select" style="flex: 2; max-width: 70%;">
+                    <option value="profan" {{#if (eq activeCategory "profan")}}selected{{/if}}>Profan</option>
+                    <option value="magisch" {{#if (eq activeCategory "magisch")}}selected{{/if}}>Magisch</option>
+                    <option value="geweiht" {{#if (eq activeCategory "geweiht")}}selected{{/if}}>Geweiht</option>
+                    <option value="daemonisch" {{#if (eq activeCategory "daemonisch")}}selected{{/if}}>Dämonisch</option>
+                </select>
+            </div>
+
+            <div class="form-group sub-category-field" id="field-profan" style="{{#if (eq activeCategory "profan")}}display: flex;{{else}}display: none;{{/if}}">
+                <label>Details</label>
+                <input type="text" name="domainProfane" value="{{domainProfane}}" placeholder="z.B. Toschkril-Stahl...">
+            </div>
+
+            <div class="form-group sub-category-field" id="field-geweiht" style="{{#if (eq activeCategory "geweiht")}}display: flex;{{else}}display: none;{{/if}} flex-direction: column; gap: 8px;">
+                <div style="display: flex; width: 100%; align-items: center; justify-content: space-between;">
+                    <label style="flex: 1;">Gottheit</label>
+                    <select name="domainGeweiht" class="god-select" style="flex: 2; max-width: 70%;">
+                        {{#each geweihteTraditionen}}
+                        <option value="{{@key}}" {{#if (eq ../domainGeweiht @key)}}selected{{/if}}>{{this.label}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div style="width: 100%; padding-left: 10px;">
+                    <textarea id="god-info-box" readonly style="width: 100%; height: 50px; font-size: 0.85em; font-family: monospace; resize: none; background: rgba(0,0,0,0.08); border: 1px solid #7a7973; border-radius: 3px; color: #555; padding: 4px;"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group sub-category-field" id="field-daemonisch" style="{{#if (eq activeCategory "daemonisch")}}display: flex;{{else}}display: none;{{/if}} flex-direction: column; gap: 8px;">
+                <div style="display: flex; width: 100%; align-items: center; justify-content: space-between;">
+                    <label style="flex: 1;">Erzdämon</label>
+                    <select name="domainDaemonisch" class="daemon-select" style="flex: 2; max-width: 70%;">
+                        {{#each daemonischeDomänen}}
+                        <option value="{{@key}}" {{#if (eq ../domainDaemonisch @key)}}selected{{/if}}>{{this.label}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div style="width: 100%; padding-left: 10px;">
+                    <textarea id="daemon-info-box" readonly style="width: 100%; height: 50px; font-size: 0.85em; font-family: monospace; resize: none; background: rgba(0,0,0,0.08); border: 1px solid #7a7973; border-radius: 3px; color: #555; padding: 4px;"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group charges-form-group" style="display: flex; align-items: center;">
+                <label style="flex: 1;">Ladungen ?</label>
+                <input type="checkbox" name="isPermanent" style="max-width: 20px; margin-right: 15px;" {{#if isPermanent}}checked{{/if}}>
+                <input type="number" id="charges-input-field" name="charges" value="{{charges}}" min="0" style="max-width: 80px; text-align: center; {{#if isPermanent}}display: block;{{else}}display: none;{{/if}}">
+            </div>
+        </fieldset>
+
+        <fieldset style="margin-bottom: 15px;">
+            <legend>Effekte & Modifikatoren (3 Slots)</legend>
+            <table class="effects-table" style="width: 100%; margin-bottom: 10px; border-collapse: collapse;">
+                <thead>
+                    <tr style="text-align: left; border-bottom: 1px solid #7a7973; font-size: 0.9em;">
+                        <th style="padding: 4px; width: 25%;">Kategorie</th>
+                        <th class="th-subcategory" style="padding: 4px; width: 25%;">Untergruppe</th>
+                        <th style="padding: 4px; width: 35%;">Effekt (Alphabetisch)</th>
+                        <th style="padding: 4px; text-align: center; width: 15%;">Stärke</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each effects}}
+                    <tr data-row-id="{{this.id}}" style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+                        <td style="padding: 6px 4px;">
+                            <select class="category-select" style="width: 100%;">
+                                <option value="characteristics" {{#if (eq this.category "characteristics")}}selected{{/if}}>Eigenschaften</option>
+                                <option value="derivedAttributes" {{#if (eq this.category "derivedAttributes")}}selected{{/if}}>Werte</option>
+                                <option value="skills" {{#if (eq this.category "skills")}}selected{{/if}}>Talente</option>
+                                <option value="combatskills" {{#if (eq this.category "combatskills")}}selected{{/if}}>Kampftalente</option>
+                            </select>
+                        </td>
+                        <td class="td-subcategory" style="padding: 6px 4px;">
+                            <select class="subcategory-select" style="width: 100%;"></select>
+                        </td>
+                        <td style="padding: 6px 4px;">
+                            <select class="effect-select" style="width: 100%;"></select>
+                        </td>
+                        <td style="padding: 6px 4px; text-align: center;">
+                            <input type="number" class="strength-input" value="{{this.strength}}" style="width: 50px; text-align: center;">
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </fieldset>
+
+        <button class="submit-generator" style="width: 100%; padding: 6px; margin-top: 10px; font-weight: bold;">Anwenden / Schmieden</button>
+    </div>
+    {{/if}}
+</div>
